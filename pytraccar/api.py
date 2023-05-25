@@ -424,17 +424,26 @@ class TraccarAPI:
             json: list of Events
         """
         path = self._urls['reports_events']
-        data = {
-	        'from': startTime,
-	        'to': endTime,
-	        'groupId': groupId,
-	        'type': event_type,
-        }
-        if not event_type:
-	        data['type'] = "%"
+        if groupId != None and event_type != None:
+            data = {
+	            'from': startTime,
+	            'to': endTime,
+	            'groupId': groupId,
+	            'type': event_type,
+            }
+        else:
+            data = {
+	            'from': startTime,
+	            'to': endTime,
+	            'groupId': "1",
+	            'type': "%",
+            }
 
+
+        """
         if not groupId:
             data['groupId'] = "1"
+        """
 
         req = self._session.get(url=path, params=data)
 
